@@ -14,6 +14,6 @@ namespace BLL.Models
         public string MainPhoto { get; set; }
         public string Photo2 { get; set; }
         public string Photo3 { get; set; }
-        public int Price { get; set; }
+        public int Price { get; set; }    
     }
 }

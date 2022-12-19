@@ -7,7 +7,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="addBtn" Width="80" Height="80" Click="addBtn_Click">add</Button>
-
+        <!--<Button x:Name="addBtn" Width="80" Height="80" Click="addBtn_Click">add</Button>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="0.4*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Grid.ColumnSpan="2" x:Name="addImg1" Click="addImg1_Click">Add img 1</Button>
+            <Button Grid.Column="2" Grid.ColumnSpan="2" x:Name="addImg2" Click="addImg2_Click">Add img 2 </Button>
+            <Button Grid.Column="4" Grid.ColumnSpan="2" x:Name="addImg3" Click="addImg3_Click">Add img 3</Button>
+            <Label Grid.Row="1" Grid.Column="0">Назва</Label>
+            <Label Grid.Row="1" Grid.Column="2">Опис</Label>
+            <Label Grid.Row="1" Grid.Column="4">Ціна</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="name_tb"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="3" x:Name="descr_tb"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="5" x:Name="price_tb"></TextBox>
+            <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="addItemBtn" Click="addItemBtn_Click">Add item</Button>
+        </Grid>
+        <ListBox Grid.Row="1" x:Name="listbox"></ListBox>
     </Grid>
 </Window>

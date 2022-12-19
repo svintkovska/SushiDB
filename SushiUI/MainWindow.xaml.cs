@@ -1,6 +1,7 @@
 ﻿using BLL.Models;
 using BLL.Services;
 using ChatClientWPF.dto;
+using DAL.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -28,44 +29,131 @@ namespace SushiUI
     public partial class MainWindow : Window
     {
         private SushiService _sushiService;
-        string base64Image;
+        string base64Image1;
+        string base64Image2;
+        string base64Image3;
+        private IList<SushiDTO> _sushis;
 
         public MainWindow()
         {
             InitializeComponent();
             _sushiService = new SushiService();
-        }
+            _sushis = _sushiService.GetAll();
 
-        private void Add()
-        {
-            _sushiService.Create(new SushiDTO()
+            foreach(var item in _sushis)
             {
-                Name = "SushiTest",
-                Description = "descriptipn test",
-                MainPhoto = base64Image,
-                Price = 300
-            });
+                CreateGrid(item);
+            }
         }
 
-        private void addBtn_Click(object sender, RoutedEventArgs e)
+        private void CreateGrid(SushiDTO sushi)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.ShowDialog();
-            string filePath = dialog.FileName;
-            byte[] imageBytes = File.ReadAllBytes(filePath);
 
-            base64Image = Convert.ToBase64String(imageBytes);
+            Grid container = new Grid() { Background = Brushes.LightPink, MaxHeight = 500 };
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.RowDefinitions.Add(new RowDefinition());
+            container.RowDefinitions.Add(new RowDefinition());
+            container.RowDefinitions.Add(new RowDefinition());
+            container.RowDefinitions.Add(new RowDefinition());
 
-            base64Image = UploadImage(base64Image);
 
-            Add();
+
+
+            BitmapImage bmp = new BitmapImage();
+            string someUrl = $"https://bv012.novakvova.com{sushi.MainPhoto}";
+            using (var webClient = new WebClient())
+            {
+                byte[] imageBytes = webClient.DownloadData(someUrl);
+                bmp = ToBitmapImage(imageBytes);
+                
+            }
+            var image = new Image() { Source = bmp,Width = 200, Height = 200, Margin = new Thickness(0) };
+            Grid.SetRow(image, 1);
+            Grid.SetRowSpan(image, 2);
+            Grid.SetColumn(image, 1);
+            Grid.SetColumnSpan(image, 2);
+
+            BitmapImage bmp2 = new BitmapImage();
+            string someUrl2 = $"https://bv012.novakvova.com{sushi.Photo2}";
+            using (var webClient = new WebClient())
+            {
+                byte[] imageBytes2 = webClient.DownloadData(someUrl2);
+                bmp2 = ToBitmapImage(imageBytes2);
+
+            }
+            var image2 = new Image() { Source = bmp2, Width = 50, Height = 50, Margin = new Thickness(0) };
+            Grid.SetRow(image2, 3);
+            Grid.SetColumn(image2, 1);
+
+            BitmapImage bmp3 = new BitmapImage();
+            string someUrl3 = $"https://bv012.novakvova.com{sushi.Photo3}";
+            using (var webClient = new WebClient())
+            {
+                byte[] imageBytes3 = webClient.DownloadData(someUrl3);
+                bmp3 = ToBitmapImage(imageBytes3);
+
+            }
+            var image3 = new Image() { Source = bmp3, Width = 50, Height = 50, Margin = new Thickness(0) };
+            Grid.SetRow(image3, 3);
+            Grid.SetColumn(image3, 2);
+
+            var textName = new TextBlock() { Text = sushi.Name, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5, 0, 0, 0) };
+            Grid.SetRow(textName, 1);
+            Grid.SetColumn(textName, 3);
+            Grid.SetColumnSpan(textName, 2);
+      
+
+            var textDescr = new TextBlock() { Text = sushi.Description, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5, 0, 0, 0) };
+            Grid.SetRow(textDescr, 2);
+            Grid.SetRowSpan(textDescr, 2);
+            Grid.SetColumn(textDescr, 3);
+            Grid.SetColumnSpan(textDescr, 2);
+
+            var textPrice = new TextBlock() { Text = sushi.Price.ToString() + " грн", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5, 0, 0, 0) }; ;
+            Grid.SetRow(textPrice, 4);
+            Grid.SetColumn(textPrice, 3);
+
+
+            container.Children.Add(image);
+            container.Children.Add(image2);
+            container.Children.Add(image3);
+            container.Children.Add(textName);
+            container.Children.Add(textDescr);
+            container.Children.Add(textPrice);
+
+            listbox.Items.Add(container);
         }
+
+
+
+        public static BitmapImage ToBitmapImage(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+
+                BitmapImage img = new BitmapImage();
+                img.BeginInit();
+                img.CacheOption = BitmapCacheOption.OnLoad;//CacheOption must be set after BeginInit()
+                img.StreamSource = ms;
+                img.EndInit();
+
+                if (img.CanFreeze)
+                {
+                    img.Freeze();
+                }
+                return img;
+            }
+        }
+
 
         private string UploadImage(string base64)
         {
             string server = "https://bv012.novakvova.com";
             UploadImagesDTO upload = new UploadImagesDTO();
-            upload.Photo = base64Image;
+            upload.Photo = base64;
             string json = JsonConvert.SerializeObject(upload);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
 
@@ -75,7 +163,6 @@ namespace SushiUI
             using (Stream stream = request.GetRequestStream())
             {
                 stream.Write(bytes, 0, bytes.Length);
-
             }
 
             try
@@ -96,5 +183,57 @@ namespace SushiUI
             return null;
         }
 
+        private void addImg1_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.ShowDialog();
+            string filePath = dialog.FileName;
+            byte[] imageBytes = File.ReadAllBytes(filePath);
+            base64Image1 = Convert.ToBase64String(imageBytes);
+            base64Image1 = UploadImage(base64Image1);
+        }
+
+        private void addImg2_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.ShowDialog();
+            string filePath = dialog.FileName;
+            byte[] imageBytes = File.ReadAllBytes(filePath);
+            base64Image2 = Convert.ToBase64String(imageBytes);
+            base64Image2 = UploadImage(base64Image2);
+        }
+
+        private void addImg3_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.ShowDialog();
+            string filePath = dialog.FileName;
+            byte[] imageBytes = File.ReadAllBytes(filePath);
+            base64Image3 = Convert.ToBase64String(imageBytes);
+            base64Image3 = UploadImage(base64Image3);
+        }
+
+        private void addItemBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _sushiService.Create(new SushiDTO()
+            {
+                Name = name_tb.Text,
+                Description = descr_tb.Text,
+                MainPhoto = base64Image1,
+                Photo2 = base64Image2,
+                Photo3 = base64Image3,
+                Price = Int32.Parse(price_tb.Text)
+            });
+
+            name_tb.Text = "";
+            descr_tb.Text = "";
+            price_tb.Text = "";
+
+            listbox.Items.Clear();
+            foreach (var item in _sushis)
+            {
+                CreateGrid(item);
+            }
+        }
     }
 }
