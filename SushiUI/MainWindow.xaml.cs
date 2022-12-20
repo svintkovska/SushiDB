@@ -49,7 +49,7 @@ namespace SushiUI
         private void CreateGrid(SushiDTO sushi)
         {
 
-            Grid container = new Grid() { Background = Brushes.LightPink};
+            Grid container = new Grid() { Background = Brushes.LightPink, Width=1200};
             container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
@@ -75,7 +75,7 @@ namespace SushiUI
                 bmp = ToBitmapImage(imageBytes);
                 
             }
-            var image = new Image() { Source = bmp,Width = 200, Height = 200, Margin = new Thickness(0) };
+            var image = new Image() { Source = bmp,Width = 250, Height = 220, Margin = new Thickness(0) };
             Grid.SetRow(image, 1);
             Grid.SetRowSpan(image, 2);
             Grid.SetColumn(image, 1);
@@ -89,7 +89,7 @@ namespace SushiUI
                 bmp2 = ToBitmapImage(imageBytes2);
 
             }
-            var image2 = new Image() { Source = bmp2, Width = 100, Height = 100, Margin = new Thickness(0) };
+            var image2 = new Image() { Source = bmp2, Width = 120, Height = 120, Margin = new Thickness(0) };
             Grid.SetRow(image2, 3);
             Grid.SetColumn(image2, 1);
 
@@ -101,25 +101,26 @@ namespace SushiUI
                 bmp3 = ToBitmapImage(imageBytes3);
 
             }
-            var image3 = new Image() { Source = bmp3, Width = 100, Height = 100, Margin = new Thickness(0) };
+            var image3 = new Image() { Source = bmp3, Width = 120, Height = 120, Margin = new Thickness(0) };
             Grid.SetRow(image3, 3);
             Grid.SetColumn(image3, 2);
 
-            var textName = new TextBlock() { Text = sushi.Name, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5, 0, 0, 0) };
+            var textName = new TextBlock() { Text = sushi.Name, VerticalAlignment = VerticalAlignment.Center, FontSize=18,
+                Margin = new Thickness(5, 0, 0, 0), FontWeight= FontWeights.Bold };
             Grid.SetRow(textName, 1);
             Grid.SetColumn(textName, 3);
-            Grid.SetColumnSpan(textName, 2);
+            Grid.SetColumnSpan(textName, 5);
       
 
             var textDescr = new TextBlock() { Text = sushi.Description, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5, 0, 0, 0) };
             Grid.SetRow(textDescr, 2);
-            Grid.SetRowSpan(textDescr, 2);
             Grid.SetColumn(textDescr, 3);
-            Grid.SetColumnSpan(textDescr, 2);
+            Grid.SetColumnSpan(textDescr, 6);
 
-            var textPrice = new TextBlock() { Text = sushi.Price.ToString() + " грн", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5, 0, 0, 0) }; ;
-            Grid.SetRow(textPrice, 4);
-            Grid.SetColumn(textPrice, 3);
+            var textPrice = new TextBlock() { Text = sushi.Price.ToString() + " грн", VerticalAlignment = VerticalAlignment.Center, FontSize = 20,
+                Margin = new Thickness(5, 0, 0, 0) }; ;
+            Grid.SetRow(textPrice, 1);
+            Grid.SetColumn(textPrice, 7);
 
 
             container.Children.Add(image);
@@ -196,6 +197,7 @@ namespace SushiUI
             byte[] imageBytes = File.ReadAllBytes(filePath);
             base64Image1 = Convert.ToBase64String(imageBytes);
             base64Image1 = UploadImage(base64Image1);
+            addImg1.IsEnabled = false;
         }
 
         private void addImg2_Click(object sender, RoutedEventArgs e)
@@ -206,6 +208,7 @@ namespace SushiUI
             byte[] imageBytes = File.ReadAllBytes(filePath);
             base64Image2 = Convert.ToBase64String(imageBytes);
             base64Image2 = UploadImage(base64Image2);
+            addImg2.IsEnabled = false;
         }
 
         private void addImg3_Click(object sender, RoutedEventArgs e)
@@ -216,6 +219,7 @@ namespace SushiUI
             byte[] imageBytes = File.ReadAllBytes(filePath);
             base64Image3 = Convert.ToBase64String(imageBytes);
             base64Image3 = UploadImage(base64Image3);
+            addImg3.IsEnabled = false;
         }
 
         private void addItemBtn_Click(object sender, RoutedEventArgs e)
@@ -233,6 +237,10 @@ namespace SushiUI
             name_tb.Text = "";
             descr_tb.Text = "";
             price_tb.Text = "";
+
+            addImg1.IsEnabled = true;
+            addImg2.IsEnabled = true;
+            addImg3.IsEnabled = true;
 
             listbox.Items.Clear();
             foreach (var item in _sushis)

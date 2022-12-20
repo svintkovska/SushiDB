@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SushiUI"
         mc:Ignorable="d"
-        Title="Sushi" Height="450" Width="800">
+        Title="Sushi" Height="600" Width="1300">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="Pink"></Setter>
@@ -55,7 +55,7 @@
                     Margin="0" FontSize="15">Add item</Button>
         </Grid>
         <TextBlock Grid.Row="1" FontSize="30" 
-                   Background="HotPink" Padding="350, 0">Items</TextBlock>
+                   Background="HotPink" Padding="620, 0">Items</TextBlock>
         <ListBox Grid.Row="2" x:Name="listbox"></ListBox>
     </Grid>
 </Window>

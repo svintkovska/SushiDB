@@ -14,10 +14,10 @@ namespace DAL.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, MaxLength(30)]
+        [Required]
         public string Name { get; set; }
 
-        [Required, MaxLength(30)]
+        [Required]
         public string Description { get; set; }
         [Required]
         public string MainPhoto { get; set; }

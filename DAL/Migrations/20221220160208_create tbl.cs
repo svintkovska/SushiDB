@@ -2,7 +2,7 @@
 
 namespace DAL.Migrations
 {
-    public partial class addnewtabletblSushi : Migration
+    public partial class createtbl : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MainPhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Photo2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Photo3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
