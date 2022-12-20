@@ -24,7 +24,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.55*"/>
+            <RowDefinition Height="0.4*"/>
             <RowDefinition Height="0.15*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>

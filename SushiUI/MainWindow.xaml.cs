@@ -49,7 +49,7 @@ namespace SushiUI
         private void CreateGrid(SushiDTO sushi)
         {
 
-            Grid container = new Grid() { Background = Brushes.LightPink, Width=1200};
+            Grid container = new Grid() { Background = Brushes.LightPink, Width=1230};
             container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
@@ -199,7 +199,6 @@ namespace SushiUI
             base64Image1 = UploadImage(base64Image1);
             addImg1.IsEnabled = false;
         }
-
         private void addImg2_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
