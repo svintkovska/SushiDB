@@ -49,7 +49,12 @@ namespace SushiUI
         private void CreateGrid(SushiDTO sushi)
         {
 
-            Grid container = new Grid() { Background = Brushes.LightPink, MaxHeight = 500 };
+            Grid container = new Grid() { Background = Brushes.LightPink};
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
+            container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
             container.ColumnDefinitions.Add(new ColumnDefinition());
@@ -84,7 +89,7 @@ namespace SushiUI
                 bmp2 = ToBitmapImage(imageBytes2);
 
             }
-            var image2 = new Image() { Source = bmp2, Width = 50, Height = 50, Margin = new Thickness(0) };
+            var image2 = new Image() { Source = bmp2, Width = 100, Height = 100, Margin = new Thickness(0) };
             Grid.SetRow(image2, 3);
             Grid.SetColumn(image2, 1);
 
@@ -96,7 +101,7 @@ namespace SushiUI
                 bmp3 = ToBitmapImage(imageBytes3);
 
             }
-            var image3 = new Image() { Source = bmp3, Width = 50, Height = 50, Margin = new Thickness(0) };
+            var image3 = new Image() { Source = bmp3, Width = 100, Height = 100, Margin = new Thickness(0) };
             Grid.SetRow(image3, 3);
             Grid.SetColumn(image3, 2);
 
@@ -136,7 +141,7 @@ namespace SushiUI
 
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
-                img.CacheOption = BitmapCacheOption.OnLoad;//CacheOption must be set after BeginInit()
+                img.CacheOption = BitmapCacheOption.OnLoad;
                 img.StreamSource = ms;
                 img.EndInit();
 
